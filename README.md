@@ -1,3 +1,3 @@
-# algorithms_csharp
+# Basic algorithms
 
-The number of base algorithms implementations written with C#.
+The number of basic algorithms implementations written with C#.
