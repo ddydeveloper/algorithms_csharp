@@ -9,6 +9,8 @@ namespace Tests
 {
     public class GraphTests
     {
+        #region Infrastructure
+
         private readonly List<Vertex> _vertices = new List<Vertex>
         {
             new Vertex(0),
@@ -24,6 +26,7 @@ namespace Tests
         };
 
         private Graph _graph;
+
         private Graph _cyclicGraph;
 
         [SetUp]
@@ -51,25 +54,29 @@ namespace Tests
             }));
         }
 
+        #endregion
+
+        #region DFS based
+
         [Test]
-        public void Dfs_Test()
+        public void RunDfs_Test()
         {
-            var result = _graph.Dfs(_vertices.ElementAt(0));
+            var result = _graph.RunDfs(_vertices.ElementAt(0));
             Assert.True(result.Count > 0);
         }
 
         [Test]
-        public void DfsRecursive_Test()
+        public void RunDfsRecursive_Test()
         {
-            var result = _graph.DfsRecursive(_vertices.ElementAt(0));
+            var result = _graph.RunRecursiveDfs(_vertices.ElementAt(0));
             Assert.True(result.Count > 0);
         }
 
         [Test]
         public void Dfs_Comparer_Test()
         {
-            var dfsResult = _graph.Dfs(_vertices.ElementAt(0));
-            var dfsRecursiveResult = _graph.DfsRecursive(_vertices.ElementAt(0));
+            var dfsResult = _graph.RunDfs(_vertices.ElementAt(0));
+            var dfsRecursiveResult = _graph.RunRecursiveDfs(_vertices.ElementAt(0));
 
             Assert.True(dfsResult.Count == dfsRecursiveResult.Count);
 
@@ -80,9 +87,9 @@ namespace Tests
         }
 
         [Test]
-        public void DfsPaths_Test()
+        public void GetPathsDfs_Test()
         {
-            var paths = _graph.DfsPaths(_vertices.ElementAt(0));
+            var paths = _graph.GetAllPathsDfs(_vertices.ElementAt(0));
             var vertex = _vertices.Single(x => x.Value == 8);
             var fullPath = vertex.GetFullPath(paths);
 
@@ -94,32 +101,57 @@ namespace Tests
         }
 
         [Test]
-        public void LcaRoot_Test()
+        public void GetLcaDfsRoot_Test()
         {
             var root = _vertices.ElementAt(0);
             var fist = _vertices.Single(x => x.Value == 8);
             var second = _vertices.Single(x => x.Value == 7);
 
-            var lca = _graph.Lca(root, fist, second);
+            var lca = _graph.GetLcaDfs(root, fist, second);
 
             Assert.True(lca.Equals(root));
         }
 
         [Test]
-        public void LcaSameEdge_Test()
+        public void GetLcaDfsShared_Test()
         {
             var root = _vertices.ElementAt(0);
             var fist = _vertices.Single(x => x.Value == 4);
             var second = _vertices.Single(x => x.Value == 9);
-            var lca = _graph.Lca(root, fist, second);
+            var lca = _graph.GetLcaDfs(root, fist, second);
 
             Assert.True(lca.Value == 1);
         }
 
         [Test]
-        public void IsCyclicFalse_Test() => Assert.False(_graph.IsCyclic(_vertices.ElementAt(0)));
+        public void IsCyclicDfsFalse_Test() => Assert.False(_graph.IsCyclicDfs(_vertices.ElementAt(0)));
 
         [Test]
-        public void IsCyclicTrue_Test() => Assert.True(_cyclicGraph.IsCyclic(_vertices.ElementAt(0)));
+        public void IsCyclicDfsTrue_Test() => Assert.True(_cyclicGraph.IsCyclicDfs(_vertices.ElementAt(0)));
+
+        #endregion
+
+        #region BFS based
+
+        [Test]
+        public void GetPathBfsExisting_Test()
+        {
+            var root = _vertices.ElementAt(0);
+            var ninth = _vertices.ElementAt(9);
+            var rootToNinthPath = _graph.GetVertexBfs(root, ninth.Value);
+
+            Assert.True(rootToNinthPath.Equals(ninth));
+        }
+
+        [Test]
+        public void GetPathBfsEmpty_Test()
+        {
+            var root = _vertices.ElementAt(0);
+            var rootToNinthPath = _graph.GetVertexBfs(root, 15);
+
+            Assert.IsNull(rootToNinthPath);
+        }
+
+        #endregion
     }
 }

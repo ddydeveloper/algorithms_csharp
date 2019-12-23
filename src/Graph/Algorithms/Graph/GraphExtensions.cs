@@ -6,7 +6,9 @@ namespace Algorithms.Graph
 {
     public static class GraphExtensions
     {
-        public static HashSet<Vertex> Dfs(this Graph graph, Vertex start)
+        #region DFS based algorithms
+
+        public static HashSet<Vertex> RunDfs(this Graph graph, Vertex start)
         {
             var visited = new HashSet<Vertex>();
 
@@ -36,7 +38,7 @@ namespace Algorithms.Graph
             return visited;
         }
 
-        public static HashSet<Vertex> DfsRecursive(this Graph graph, Vertex vertex, HashSet<Vertex> visited = null)
+        public static HashSet<Vertex> RunRecursiveDfs(this Graph graph, Vertex vertex, HashSet<Vertex> visited = null)
         {
             if (visited == null)
             {
@@ -54,12 +56,12 @@ namespace Algorithms.Graph
                 .Where(child => !visited.Contains(child))
                 .Reverse()
                 .ToList()
-                .ForEach(child => DfsRecursive(graph, child, visited));
+                .ForEach(child => RunRecursiveDfs(graph, child, visited));
 
             return visited;
         }
 
-        public static Dictionary<Vertex, Vertex> DfsPaths(this Graph graph, Vertex vertex, Vertex from = null, Dictionary<Vertex, Vertex> paths = null)
+        public static Dictionary<Vertex, Vertex> GetAllPathsDfs(this Graph graph, Vertex vertex, Vertex from = null, Dictionary<Vertex, Vertex> paths = null)
         {
             if (paths == null)
             {
@@ -77,14 +79,14 @@ namespace Algorithms.Graph
                 .Where(child => !paths.ContainsKey(child))
                 .Reverse()
                 .ToList()
-                .ForEach(child => DfsPaths(graph, child, vertex, paths));
+                .ForEach(child => GetAllPathsDfs(graph, child, vertex, paths));
 
             return paths;
         }
 
-        public static Vertex Lca(this Graph graph, Vertex root, Vertex first, Vertex second)
+        public static Vertex GetLcaDfs(this Graph graph, Vertex root, Vertex first, Vertex second)
         {
-            var paths = graph.DfsPaths(root);
+            var paths = graph.GetAllPathsDfs(root);
             var firstPath = first.GetFullPath(paths);
             var secondPath = second.GetFullPath(paths);
 
@@ -92,7 +94,7 @@ namespace Algorithms.Graph
             return intersections.FirstOrDefault();
         }
 
-        public static bool IsCyclic(this Graph graph, Vertex start)
+        public static bool IsCyclicDfs(this Graph graph, Vertex start)
         {
             if (graph is null || !graph.Vertices.ContainsKey(start))
             {
@@ -124,5 +126,39 @@ namespace Algorithms.Graph
 
             return false;
         }
+
+        #endregion
+
+        #region BFS based algorithms
+
+        public static Vertex GetVertexBfs(this Graph graph, Vertex root, int value)
+        {
+            if (graph is null || !graph.Vertices.ContainsKey(root))
+            {
+                return null;
+            }
+
+            var visited = new HashSet<Vertex>();
+            var queue = new Queue<Vertex>();
+            queue.Enqueue(root);
+
+            while (queue.Count > 0)
+            {
+                var vertex = queue.Dequeue();
+
+                if (vertex.Value == value) return vertex;
+
+                visited.Add(vertex);
+
+                graph.Vertices[vertex]
+                    .Where(child => !visited.Contains(child))
+                    .ToList()
+                    .ForEach(child => { queue.Enqueue(child); });
+            }
+
+            return null;
+        }
+
+        #endregion
     }
 }
