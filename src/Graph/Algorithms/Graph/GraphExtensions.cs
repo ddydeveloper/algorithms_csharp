@@ -6,7 +6,7 @@ namespace Algorithms.Graph
 {
     public static class GraphExtensions
     {
-        #region DFS based algorithms
+        #region DFS non recursive
 
         public static HashSet<Vertex> RunDfs(this Graph graph, Vertex start)
         {
@@ -38,51 +38,73 @@ namespace Algorithms.Graph
             return visited;
         }
 
-        public static HashSet<Vertex> RunRecursiveDfs(this Graph graph, Vertex vertex, HashSet<Vertex> visited = null)
+        #endregion
+
+        #region DFS recursive
+
+        public static HashSet<Vertex> RunRecursiveDfs(this Graph graph, Vertex start, HashSet<Vertex> visited = null)
         {
             if (visited == null)
             {
                 visited = new HashSet<Vertex>();
             }
 
-            if (graph is null || !graph.Vertices.ContainsKey(vertex) || visited.Contains(vertex))
+            if (graph is null || !graph.Vertices.ContainsKey(start) || visited.Contains(start))
             {
                 return visited;
             }
 
+            RecursiveDfs(graph, start, visited);
+
+            return visited;
+        }
+
+        private static void RecursiveDfs(Graph graph, Vertex vertex, HashSet<Vertex> visited)
+        {
             visited.Add(vertex);
 
             graph.Vertices[vertex]
                 .Where(child => !visited.Contains(child))
                 .Reverse()
                 .ToList()
-                .ForEach(child => RunRecursiveDfs(graph, child, visited));
-
-            return visited;
+                .ForEach(child => RecursiveDfs(graph, child, visited));
         }
 
-        public static Dictionary<Vertex, Vertex> GetAllPathsDfs(this Graph graph, Vertex vertex, Vertex from = null, Dictionary<Vertex, Vertex> paths = null)
+        #endregion
+
+        #region DFS based get paths
+
+        public static Dictionary<Vertex, Vertex> GetAllPathsDfs(this Graph graph, Vertex start, Vertex from = null, Dictionary<Vertex, Vertex> paths = null)
         {
             if (paths == null)
             {
                 paths = new Dictionary<Vertex, Vertex>();
             }
 
-            if (graph is null || !graph.Vertices.ContainsKey(vertex) || paths.ContainsKey(vertex))
+            if (graph is null || !graph.Vertices.ContainsKey(start) || paths.ContainsKey(start))
             {
                 return paths;
             }
 
+            PathsDfs(graph, start, null, paths);
+
+            return paths;
+        }
+
+        private static void PathsDfs(this Graph graph, Vertex vertex, Vertex from, Dictionary<Vertex, Vertex> paths)
+        {
             paths[vertex] = from;
 
             graph.Vertices[vertex]
                 .Where(child => !paths.ContainsKey(child))
                 .Reverse()
                 .ToList()
-                .ForEach(child => GetAllPathsDfs(graph, child, vertex, paths));
-
-            return paths;
+                .ForEach(child => PathsDfs(graph, child, vertex, paths));
         }
+
+        #endregion
+
+        #region DFS based LCA
 
         public static Vertex GetLcaDfs(this Graph graph, Vertex root, Vertex first, Vertex second)
         {
@@ -93,6 +115,10 @@ namespace Algorithms.Graph
             var intersections = firstPath.Intersect(secondPath).ToList();
             return intersections.FirstOrDefault();
         }
+
+        #endregion
+
+        #region DFS based has cycles
 
         public static bool IsCyclicDfs(this Graph graph, Vertex start)
         {
@@ -129,7 +155,43 @@ namespace Algorithms.Graph
 
         #endregion
 
-        #region BFS based algorithms
+        #region DFS based topological sort
+
+        public static bool TryApplyTopologicalSortDfs(this Graph graph, Vertex start, Stack<Vertex> order = null)
+        {
+            if (order == null)
+            {
+                order = new Stack<Vertex>();
+            }
+
+            if (graph is null || !graph.Vertices.ContainsKey(start) || order.Contains(start))
+            {
+                return false;
+            }
+
+            if (graph.IsCyclicDfs(start))
+            {
+                return false;
+            }
+
+            TopologicalSortDfs(graph, start, order);
+
+            return true;
+        }
+
+        private static void TopologicalSortDfs(Graph graph, Vertex vertex, Stack<Vertex> visited)
+        {
+            graph.Vertices[vertex]
+                .Where(child => !visited.Contains(child))
+                .ToList()
+                .ForEach(child => TopologicalSortDfs(graph, child, visited));
+
+            visited.Push(vertex);
+        }
+
+        #endregion
+
+        #region BFS
 
         public static Vertex GetVertexBfs(this Graph graph, Vertex root, int value)
         {
@@ -146,7 +208,7 @@ namespace Algorithms.Graph
             {
                 var vertex = queue.Dequeue();
 
-                if (vertex.Value == value) return vertex;
+                if (vertex.Number == value) return vertex;
 
                 visited.Add(vertex);
 

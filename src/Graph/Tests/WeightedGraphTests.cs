@@ -48,8 +48,8 @@ namespace Tests
         public void Dejkstra_Test()
         {
             var root = _vertices.ElementAt(0);
-            var fifth = _vertices.Single(x => x.Value == 5);
-            var ninth = _vertices.Single(x => x.Value == 9);
+            var fifth = _vertices.Single(x => x.Number == 5);
+            var ninth = _vertices.Single(x => x.Number == 9);
 
             var result = _graph.Dejkstra(root);
 

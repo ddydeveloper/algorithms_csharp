@@ -35,5 +35,35 @@ namespace Tests
 
             Assert.True(result.SequenceEqual(expected));
         }
+
+        [Test]
+        public void SortEmpty_Test()
+        {
+            var array = new int[0];
+            var expected = new int[0];
+            var result = array.ApplyMergeSort();
+
+            Assert.True(result.SequenceEqual(expected));
+        }
+
+        [Test]
+        public void Sort1Item_Test()
+        {
+            var array = new[] {1};
+            var expected = new[] {1};
+            var result = array.ApplyMergeSort();
+
+            Assert.True(result.SequenceEqual(expected));
+        }
+
+        [Test]
+        public void Sort2Item_Test()
+        {
+            var array = new[] {10,1};
+            var expected = new[] {1,10};
+            var result = array.ApplyMergeSort();
+
+            Assert.True(result.SequenceEqual(expected));
+        }
     }
 }

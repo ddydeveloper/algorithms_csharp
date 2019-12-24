@@ -90,22 +90,22 @@ namespace Tests
         public void GetPathsDfs_Test()
         {
             var paths = _graph.GetAllPathsDfs(_vertices.ElementAt(0));
-            var vertex = _vertices.Single(x => x.Value == 8);
+            var vertex = _vertices.Single(x => x.Number == 8);
             var fullPath = vertex.GetFullPath(paths);
 
             Assert.True(fullPath.Count == 4);
-            Assert.True(fullPath.Any(x => x.Value == 8));
-            Assert.True(fullPath.Any(x => x.Value == 3));
-            Assert.True(fullPath.Any(x => x.Value == 1));
-            Assert.True(fullPath.Any(x => x.Value == 0));
+            Assert.True(fullPath.Any(x => x.Number == 8));
+            Assert.True(fullPath.Any(x => x.Number == 3));
+            Assert.True(fullPath.Any(x => x.Number == 1));
+            Assert.True(fullPath.Any(x => x.Number == 0));
         }
 
         [Test]
         public void GetLcaDfsRoot_Test()
         {
             var root = _vertices.ElementAt(0);
-            var fist = _vertices.Single(x => x.Value == 8);
-            var second = _vertices.Single(x => x.Value == 7);
+            var fist = _vertices.Single(x => x.Number == 8);
+            var second = _vertices.Single(x => x.Number == 7);
 
             var lca = _graph.GetLcaDfs(root, fist, second);
 
@@ -116,11 +116,38 @@ namespace Tests
         public void GetLcaDfsShared_Test()
         {
             var root = _vertices.ElementAt(0);
-            var fist = _vertices.Single(x => x.Value == 4);
-            var second = _vertices.Single(x => x.Value == 9);
+            var fist = _vertices.Single(x => x.Number == 4);
+            var second = _vertices.Single(x => x.Number == 9);
             var lca = _graph.GetLcaDfs(root, fist, second);
 
-            Assert.True(lca.Value == 1);
+            Assert.True(lca.Number == 1);
+        }
+
+        [Test]
+        public void TopologicalSort_Test()
+        {
+            var vertices = new List<Vertex>
+            {
+                new Vertex(0),
+                new Vertex(1),
+                new Vertex(2),
+                new Vertex(3),
+                new Vertex(4)
+            };
+
+            var edges = new List<Tuple<Vertex, Vertex>>
+            {
+                new Tuple<Vertex, Vertex>(vertices.ElementAt(3), vertices.ElementAt(2)),
+                new Tuple<Vertex, Vertex>(vertices.ElementAt(2), vertices.ElementAt(4)),
+                new Tuple<Vertex, Vertex>(vertices.ElementAt(4), vertices.ElementAt(1)),
+                new Tuple<Vertex, Vertex>(vertices.ElementAt(4), vertices.ElementAt(0))
+            };
+
+            var graph = new Graph(vertices, edges);
+            var orderedStack = new Stack<Vertex>();
+            graph.TryApplyTopologicalSortDfs(vertices.ElementAt(3), orderedStack);
+
+            Assert.True(orderedStack.Count == vertices.Count);
         }
 
         [Test]
@@ -138,7 +165,7 @@ namespace Tests
         {
             var root = _vertices.ElementAt(0);
             var ninth = _vertices.ElementAt(9);
-            var rootToNinthPath = _graph.GetVertexBfs(root, ninth.Value);
+            var rootToNinthPath = _graph.GetVertexBfs(root, ninth.Number);
 
             Assert.True(rootToNinthPath.Equals(ninth));
         }

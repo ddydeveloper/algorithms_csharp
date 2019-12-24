@@ -3,42 +3,30 @@ using System;
 namespace Algorithms
 {
     /// <summary>
-    /// Vertex color
-    /// </summary>
-    public enum VertexColor
-    {
-        White = 0,
-        Gray = 1,
-        Black = 2
-    }
-
-    /// <summary>
     /// Graph vertex
     /// </summary>
     public class Vertex: IEquatable<Vertex>
     {
-        public Vertex(int value)
+        public Vertex(int number)
         {
-            Value = value;
+            Number = number;
         }
 
-        public int Value { get; }
-
-        public VertexColor Color { get; set; } = VertexColor.White;
+        public int Number { get; }
 
         #region Object implementation
 
-        public override string ToString() => $"${Value}: ${Color}";
+        public override string ToString() => Number.ToString();
 
         public override bool Equals(object obj) => Equals(obj as Vertex);
 
-        public override int GetHashCode() => Value;
+        public override int GetHashCode() => Number;
 
         #endregion
 
         #region IEquatable implementation
 
-        public bool Equals(Vertex other) => other != null && Value == other.Value;
+        public bool Equals(Vertex other) => other != null && Number == other.Number;
 
         #endregion
     }
