@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace Algorithms.WeightedGraph
 {
+    /// <summary>
+    /// Graph implementation working with weighted edges
+    /// </summary>
     public class WeightedGraph
     {
         public IList<Vertex> Vertices { get; }

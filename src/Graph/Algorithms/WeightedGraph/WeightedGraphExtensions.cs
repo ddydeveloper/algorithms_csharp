@@ -6,7 +6,7 @@ namespace Algorithms.WeightedGraph
 {
     public static class WeightedGraphExtensions
     {
-        public static Dictionary<Vertex, int> Dejkstra(this WeightedGraph graph, Vertex vertex, Dictionary<Vertex, int> paths = null, int weight = 0)
+        public static Dictionary<Vertex, int> CalculateDejkstra(this WeightedGraph graph, Vertex vertex, Dictionary<Vertex, int> paths = null, int weight = 0)
         {
             if (weight < 0)
             {
@@ -30,7 +30,7 @@ namespace Algorithms.WeightedGraph
 
                 paths.Add(currentVertex, currentWeight);
 
-                graph.Dejkstra(currentVertex, paths, currentWeight);
+                graph.CalculateDejkstra(currentVertex, paths, currentWeight);
             }
 
             return paths;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Algorithms.Graph
 {
     /// <summary>
-    /// Oriented graph
+    /// Oriented graph implementation
     /// </summary>
     public class Graph
     {

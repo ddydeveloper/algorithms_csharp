@@ -51,7 +51,7 @@ namespace Tests
             var fifth = _vertices.Single(x => x.Number == 5);
             var ninth = _vertices.Single(x => x.Number == 9);
 
-            var result = _graph.Dejkstra(root);
+            var result = _graph.CalculateDejkstra(root);
 
             Assert.True(result.Count == 9);
             Assert.True(result[fifth] == 60);
