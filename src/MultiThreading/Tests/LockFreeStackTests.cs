@@ -1,6 +1,6 @@
 ﻿using System;
-using MultiThreading.Collections;
 using NUnit.Framework;
+using Source.Collections;
 
 namespace Tests
 {

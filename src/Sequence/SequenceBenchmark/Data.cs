@@ -1,3 +1,5 @@
+using System;
+
 namespace Benchmark
 {
     public class Data
@@ -27,5 +29,17 @@ namespace Benchmark
             220, 119, 180, 17, 186, 345, 401, 40, 189, 11, 5, 3, 4, 8, 2, 44, 9, 89, 6, 1,
             14, 119, 3, 33, 186, 345, 901, 40, 189, 11, 5, 67, 61, 87, 0, 12, 9, 12, 6, 78,
         };
+
+        public static int[] GetExtraLargeArray()
+        {
+            var rand = new Random();
+            var array = new int[50000];
+            for (var i = 0; i < 50000; i++)
+            {
+                array[i] = rand.Next(0, 1000);
+            }
+
+            return array;
+        }
     }
 }

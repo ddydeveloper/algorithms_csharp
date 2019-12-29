@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-namespace MultiThreading.Primitives
+namespace Source.Primitives
 {
     public class RwLockCustom
     {

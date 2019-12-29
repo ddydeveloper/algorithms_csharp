@@ -2,23 +2,23 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Graph", "Graph", "{B8070214-4A99-4DD6-89DB-CB97BE3AE679}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms", "Graph\Algorithms\Algorithms.csproj", "{4699E946-0106-4789-BFB2-E7EF9979AC35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Source", "Graph\Source\Source.csproj", "{4699E946-0106-4789-BFB2-E7EF9979AC35}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Graph\Tests\Tests.csproj", "{28DD6E2D-CAFF-41F6-ABF0-2EF8EF976D74}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sequence", "Sequence", "{6C56E9B4-46FE-4E42-BCEB-22E7E07EF17E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms", "Sequence\Algorithms\Algorithms.csproj", "{C8765FEA-6750-4DC9-B5EF-88862F289D5A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Source", "Sequence\Source\Source.csproj", "{C8765FEA-6750-4DC9-B5EF-88862F289D5A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Sequence\Tests\Tests.csproj", "{0C52BF1D-484C-4D34-AC31-7AE05D1E1FD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Sequence\Benchmark\Benchmark.csproj", "{8E59D328-F422-431D-ABBB-E2EE16C180DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequenceBenchmark", "Sequence\SequenceBenchmark\SequenceBenchmark.csproj", "{8E59D328-F422-431D-ABBB-E2EE16C180DD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MultiThreading", "MultiThreading", "{5E6563EA-D315-4BED-AF16-309AF1B5039F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreading", "MultiThreading\MultiThreading\MultiThreading.csproj", "{651100D0-D0B6-440F-A4DE-3FE766DE86A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Source", "MultiThreading\Source\Source.csproj", "{651100D0-D0B6-440F-A4DE-3FE766DE86A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Measure", "MultiThreading\Measure\Measure.csproj", "{1F489EC5-1D46-44DF-AC5E-FA79DA99DC34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreadingBenchmark", "MultiThreading\MultiThreadingBenchmark\MultiThreadingBenchmark.csproj", "{1F489EC5-1D46-44DF-AC5E-FA79DA99DC34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "MultiThreading\Tests\Tests.csproj", "{01194E1F-61A2-4C1C-AEE6-5EC2DFC70085}"
 EndProject

@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
-using Algorithms;
 using NUnit.Framework;
+using Source;
 
 namespace Tests
 {

@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MultiThreading\MultiThreading.csproj" />
+      <ProjectReference Include="..\Source\Source.csproj" />
     </ItemGroup>
 
 </Project>

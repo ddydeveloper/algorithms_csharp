@@ -1,3 +1,3 @@
-# Basic algorithms
+# Data structured and algorithms
 
-The number of basic algorithms implementations written with C#.
+The number of basic algorithms implementations written with C#. 

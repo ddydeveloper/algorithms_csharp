@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Algorithms
+namespace Source
 {
     public static class BinarySearchExtensions
     {

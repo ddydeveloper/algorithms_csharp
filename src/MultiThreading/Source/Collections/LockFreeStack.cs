@@ -1,7 +1,6 @@
-using System.Threading;
-using MultiThreading.Primitives;
+using Source.Primitives;
 
-namespace MultiThreading.Collections
+namespace Source.Collections
 {
     /// <summary>
     /// Thread-safe lock free LIFO data structure implementation

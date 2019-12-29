@@ -1,4 +1,4 @@
-namespace MultiThreading.Collections
+namespace Source.Collections
 {
     public class Node<T>
     {

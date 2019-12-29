@@ -1,6 +1,6 @@
 using System.Threading;
 
-namespace MultiThreading.Primitives
+namespace Source.Primitives
 {
     public static class LockFreeApi
     {
