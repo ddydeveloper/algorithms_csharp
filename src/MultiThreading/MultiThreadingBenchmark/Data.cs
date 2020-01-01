@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Benchmark
 {
@@ -10,25 +11,26 @@ namespace Benchmark
         private const int ReadersCount = 10;
         private const int WritersCount = 5;
         private const int Count = 10000;
-        
+
         private static readonly Dictionary<int, string> Map = new Dictionary<int, string>();
-        
-        public static IList<Thread> GetThreadList(Action read, Action write)
+
+        public static Task[] GetThreadList(Action read, Action write)
         {
-            var threads = Enumerable.Range(0, ReadersCount).Select(n => new Thread(() =>
-                {
-                    for (var i = 0; i < Count; i++) read();
-                })).Concat(Enumerable.Range(0, WritersCount).Select(n => new Thread(() =>
-                {
-                    for (var i = 0; i < Count; i++) write();
-                })))
-                .ToArray();
-            
             Map.Clear();
 
-            return threads;
+            var readTasks = Enumerable.Range(0, ReadersCount).Select(r => Task.Factory.StartNew(() =>
+            {
+                for (var i = 0; i < Count; i++) read();
+            }));
+
+            var writeTasks = Enumerable.Range(0, WritersCount).Select(r => Task.Factory.StartNew(() =>
+            {
+                for (var i = 0; i < Count; i++) write();
+            }));
+
+            return readTasks.Concat(writeTasks).ToArray();
         }
-        
+
         public static void DoReadJob()
         {
             Map.TryGetValue(Environment.TickCount % Count, out _);

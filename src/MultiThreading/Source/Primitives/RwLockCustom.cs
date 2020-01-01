@@ -15,10 +15,7 @@ namespace Source.Primitives
         {
             lock (_lockObject)
             {
-                while (IsInRead() || IsInWrite())
-                {
-                    Monitor.Wait(_lockObject);
-                }
+                while (!CanRead()) Monitor.Wait(_lockObject);
 
                 return new Locker(_lockObject, true);
             }
@@ -28,10 +25,7 @@ namespace Source.Primitives
         {
             lock (_lockObject)
             {
-                while (IsInRead() || IsInWrite())
-                {
-                    Monitor.Wait(_lockObject);
-                }
+                while (!CanWrite()) Monitor.Wait(_lockObject);
 
                 return new Locker(_lockObject, false);
             }
@@ -41,9 +35,9 @@ namespace Source.Primitives
 
         #region Lock Infrastructure
 
-        private static bool IsInRead() => Thread.VolatileRead(ref _readerCount) > 0;
+        private bool CanRead() => Thread.VolatileRead(ref _writerCount) == 0;
 
-        private static bool IsInWrite() => Thread.VolatileRead(ref _writerCount) > 0;
+        private bool CanWrite() => Thread.VolatileRead(ref _readerCount) == 0 && Thread.VolatileRead(ref _writerCount) == 0;
 
         private class Locker: IDisposable
         {
